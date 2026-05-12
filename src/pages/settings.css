@@ -1,0 +1,98 @@
+.settings-container {
+  min-height: 100vh;
+  background: #f2f2f2;
+  padding: 20px;
+  padding-bottom: 90px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* ================= HEADER ================= */
+
+.settings-header {
+  margin-top: 10px;
+}
+
+.settings-header h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #000;
+  font-family: "Playfair Display", serif;
+}
+
+.settings-header p {
+  color: #666;
+  margin-top: 6px;
+  font-size: 14px;
+}
+
+/* ================= PROFILE CARD ================= */
+
+.profile-card {
+  margin-top: 24px;
+  background: white;
+  border-radius: 22px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.profile-image {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #e7e7e7;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 28px;
+}
+
+.profile-info h2 {
+  font-size: 20px;
+  color: #000;
+  font-family: "Playfair Display", serif;
+}
+
+.profile-info p {
+  color: #777;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+/* ================= SETTINGS LIST ================= */
+
+.settings-list {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.setting-item {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  font-size: 16px;
+  font-weight: 500;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.setting-item:hover {
+  transform: scale(1.01);
+}
+
+.logout {
+  color: #d11a2a;
+  justify-content: center;
+  font-weight: 600;
+}
