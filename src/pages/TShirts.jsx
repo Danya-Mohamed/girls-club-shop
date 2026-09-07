@@ -3,7 +3,7 @@ import { useState } from "react";
 import PageLayout from "../components/PageLayout";
 import FilterSidebar from "../components/FilterSidebar";
 
-import TshirtCard from "../components/TshirtCard";
+import TshirtCard from "../components/TShirtCard";
 
 import russtee from "../assets/russtee.jpg";
 import matchatee from "../assets/matchtee.jpg";
