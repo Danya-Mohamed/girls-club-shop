@@ -1,0 +1,25 @@
+/* DARK MODE */
+
+.dark-mode {
+  background: #111;
+  color: white;
+}
+
+.dark-mode .settings-container {
+  background: #111;
+  color: white;
+}
+
+.dark-mode .profile-card {
+  background: #1e1e1e;
+}
+
+.dark-mode .setting-item {
+  background: #1e1e1e;
+  color: white;
+  border-bottom: 1px solid #333;
+}
+
+.dark-mode input {
+  accent-color: white;
+}

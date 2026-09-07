@@ -1,24 +1,25 @@
-/* ================= FONTS + ROOT ================= */
+/* ================= ROOT ================= */
 
 :root {
-  --text: #000;
-  --bg: #ffffff;
+  --bg: #f6f6f6;
+  --card: #ffffff;
+  --text: #111111;
+  --muted: #777777;
 
-  --primary-font: "Poppins", sans-serif;
-  --lux-font: "Playfair Display", serif;
+  /* accent colors (modern fashion look) */
+  --primary: #ff3d71;     /* pink fashion accent */
+  --secondary: #7c4dff;    /* purple accent */
+  --gold: #f5c542;        /* luxury highlight */
 
-  font-family: var(--primary-font);
-  color: var(--text);
-  background: var(--bg);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --gradient: linear-gradient(135deg, #ff3d71, #7c4dff);
 }
 
-/* ================= FULL SCREEN FIX ================= */
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Poppins", sans-serif;
+}
+/* ================= GLOBAL RESET ================= */
 
 html,
 body,
@@ -29,68 +30,129 @@ body,
   padding: 0;
 }
 
-/* ================= BODY ================= */
-
 body {
   overflow-x: hidden;
-  background: #fff;
+  background: var(--bg);
+  color: var(--text);
 }
 
-/* ================= HEADINGS ================= */
+/* ================= DARK MODE BASE ================= */
 
-h1,
-h2,
-h3 {
+body.dark-mode {
+  --text: #fff;
+  --bg: #111;
+  --card-bg: #1c1c1c;
+  --border: rgba(255,255,255,0.08);
+
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* IMPORTANT: DO NOT FORCE ALL TEXT WHITE */
+
+/* ================= TEXT ================= */
+
+h1, h2, h3 {
   font-family: var(--lux-font);
   margin: 0;
+  color: inherit;
 }
-
-/* ================= TEXT RESET ================= */
 
 p {
   margin: 0;
-  font-family: var(--primary-font);
+  color: inherit;
 }
 
-/* ================= GLOBAL IMAGE HANDLING ================= */
+/* ================= NAVBAR ================= */
 
-img {
-  max-width: 100%;
-  display: block;
-  object-fit: cover;
+.lux-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  height: 80px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 24px;
+
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
 }
 
-/* ================= PAGE TITLE (Jackets / Favorites) ================= */
+body.dark-mode .lux-navbar {
+  background: rgba(20, 20, 20, 0.85);
+  border-bottom: 1px solid var(--border);
+}
 
-.page-title {
+.lux-logo {
+  font-size: 34px;
   font-family: var(--lux-font);
-  font-size: 28px;
-  text-align: center;
-  margin: 20px 0;
-  letter-spacing: 1px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: inherit;
 }
 
-/* ================= CARD STYLE (Products / Favorites) ================= */
+.nav-icon {
+  font-size: 24px;
+  color: inherit;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-.card {
+.nav-icon:hover {
+  transform: translateY(-2px);
+  color: #b76e79;
+}
+
+/* ================= LAYOUT ================= */
+
+.settings-container,
+.home-container,
+.shop-layout {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ================= CARDS ================= */
+
+.card,
+.profile-card,
+.setting-item {
+  background: var(--card-bg);
+  color: inherit;
   border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.3s ease;
 }
 
-.card:hover {
-  transform: translateY(-5px);
+/* ================= SETTINGS ================= */
+
+.settings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-/* ================= CARD TEXT ================= */
-
-.card p {
-  font-size: 14px;
-  font-weight: 500;
+.setting-item {
+  padding: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border);
 }
 
-/* ================= NAVBAR SAFE AREA ================= */
+/* ================= PRODUCTS GRID ================= */
+
+.fashion-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+/* ================= NAV SAFE AREA ================= */
 
 body {
-  padding-bottom: 70px; /* so navbar doesn't overlap content */
+  padding-bottom: 70px;
 }

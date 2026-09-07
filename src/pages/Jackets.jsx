@@ -1,29 +1,35 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+
+import PageLayout from "../components/PageLayout";
+import FilterSidebar from "../components/FilterSidebar";
 import JacketCard from "../components/JacketCard";
-import "../pages/home.css";
 
 const Jackets = () => {
-  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
 
+  const [filters, setFilters] = useState({
+    category: "jackets",
+    sizes: [],
+    price: 500,
+  });
+
+  // ✅ FETCH API (RESTORED)
   useEffect(() => {
     fetch("https://fakestoreapi.com/products")
       .then((res) => res.json())
       .then((data) => {
-        const femaleJackets = data.filter((item) =>
-          item.category === "women's clothing" &&
-          (
-            item.title.toLowerCase().includes("jacket") ||
-            item.title.toLowerCase().includes("coat")
-          )
+        const femaleJackets = data.filter(
+          (item) =>
+            item.category === "women's clothing" &&
+            (item.title.toLowerCase().includes("jacket") ||
+              item.title.toLowerCase().includes("coat"))
         );
 
         const formatted = femaleJackets.map((item) => ({
           id: item.id,
           name: item.title,
           price: item.price,
+          size: "M",
           image: item.image,
         }));
 
@@ -32,29 +38,63 @@ const Jackets = () => {
   }, []);
 
   return (
-    <div className="home-container">
+    <PageLayout>
+      {(search) => {
 
-      {/* TOP BAR */}
-      <header className="top-bar">
-        <span onClick={() => navigate("/home")}>🏠</span>
-        <h1 className="logo">The Girls Club</h1>
-        <span>🛒</span>
-      </header>
+        const filteredProducts = products
+          // 🔍 SEARCH
+          .filter((p) =>
+            p.name.toLowerCase().includes(search.toLowerCase())
+          )
 
-      {/* TITLE */}
-    <h2 className="page-title">Female Jackets</h2>
+          // 🎯 FILTERS
+          .filter((p) => {
+            const sizeMatch =
+              filters.sizes.length === 0 ||
+              filters.sizes.includes(p.size);
 
-      {/* GRID */}
-      <div className="grid">
+            const priceMatch = p.price <= filters.price;
 
-        {products.map((item) => (
-          <JacketCard key={item.id} item={item} />
-        ))}
+            return sizeMatch && priceMatch;
+          });
 
-      </div>
+        return (
+          <div className="shop-layout">
 
-      <Navbar />
-    </div>
+            {/* FILTER SIDEBAR */}
+            <FilterSidebar
+              filters={filters}
+              setFilters={setFilters}
+            />
+
+            {/* CONTENT */}
+            <div className="shop-content">
+
+              <h2
+                style={{
+                  fontFamily: "Playfair Display",
+                  fontWeight: 300,
+                  letterSpacing: "3px",
+                  marginBottom: "30px",
+                }}
+              >
+                JACKETS COLLECTION
+              </h2>
+
+              <div className="fashion-grid">
+
+                {filteredProducts.map((item) => (
+                  <JacketCard key={item.id} item={item} />
+                ))}
+
+              </div>
+
+            </div>
+
+          </div>
+        );
+      }}
+    </PageLayout>
   );
 };
 

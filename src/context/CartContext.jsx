@@ -5,62 +5,50 @@ const CartContext = createContext();
 export default function CartProvider({ children }) {
   const [cart, setCart] = useState([]);
 
-  // ADD TO CART
-  const addToCart = (item) => {
+  const addToCart = (product) => {
     setCart((prev) => {
-      const exists = prev.find((p) => p.id === item.id);
+      const exists = prev.find(
+        (item) => String(item.id) === String(product.id)
+      );
 
       if (exists) {
-        return prev.map((p) =>
-          p.id === item.id
-            ? { ...p, quantity: p.quantity + 1 }
-            : p
+        return prev.map((item) =>
+          String(item.id) === String(product.id)
+            ? { ...item, qty: item.qty + 1 }
+            : item
         );
       }
 
-      return [...prev, { ...item, quantity: 1 }];
+      return [...prev, { ...product, qty: 1 }];
     });
   };
 
-  // INCREASE QUANTITY
+  const removeFromCart = (id) => {
+    setCart((prev) =>
+      prev.filter((item) => String(item.id) !== String(id))
+    );
+  };
+
   const increaseQty = (id) => {
     setCart((prev) =>
       prev.map((item) =>
-        item.id === id
-          ? { ...item, quantity: item.quantity + 1 }
+        String(item.id) === String(id)
+          ? { ...item, qty: item.qty + 1 }
           : item
       )
     );
   };
 
-  // DECREASE QUANTITY
   const decreaseQty = (id) => {
     setCart((prev) =>
       prev
         .map((item) =>
-          item.id === id
-            ? { ...item, quantity: item.quantity - 1 }
+          String(item.id) === String(id)
+            ? { ...item, qty: item.qty - 1 }
             : item
         )
-        .filter((item) => item.quantity > 0)
+        .filter((item) => item.qty > 0)
     );
-  };
-
-  // REMOVE ITEM
-  const removeFromCart = (id) => {
-    setCart((prev) => prev.filter((item) => item.id !== id));
-  };
-
-  // TOTAL PRICE
-  const totalPrice = cart.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
-  // CHECKOUT
-  const checkout = () => {
-    alert("🎉 Order placed successfully!");
-    setCart([]);
   };
 
   return (
@@ -68,11 +56,9 @@ export default function CartProvider({ children }) {
       value={{
         cart,
         addToCart,
+        removeFromCart,
         increaseQty,
         decreaseQty,
-        removeFromCart,
-        totalPrice,
-        checkout,
       }}
     >
       {children}

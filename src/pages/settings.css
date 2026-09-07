@@ -96,3 +96,33 @@
   justify-content: center;
   font-weight: 600;
 }
+
+
+body.dark-mode {
+  background-color: #111;
+  color: #f5f5f5;
+}
+
+/* only pages */
+body.dark-mode .settings-container,
+body.dark-mode .shop-layout,
+body.dark-mode .home-container {
+  background: #111;
+  color: #f5f5f5;
+}
+
+/* cards only */
+body.dark-mode .profile-card,
+body.dark-mode .setting-item,
+body.dark-mode .card,
+body.dark-mode .shop-content {
+  background: #1c1c1c;
+  color: #f5f5f5;
+}
+
+/* ONLY text inside main content, NOT navbar */
+body.dark-mode .settings-container p,
+body.dark-mode .settings-container h1,
+body.dark-mode .settings-container h2 {
+  color: #f5f5f5;
+}

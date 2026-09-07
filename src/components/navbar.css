@@ -1,0 +1,95 @@
+/* ================= NAVBAR BASE ================= */
+
+.lux-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+
+  height: 80px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 24px;
+
+  background: rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px);
+
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+}
+
+/* ================= LOGO ================= */
+
+.lux-logo {
+  font-size: 34px;
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #111;
+  cursor: pointer;
+}
+
+/* ================= NAV LINKS ================= */
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+  font-size: 12px;
+}
+
+.nav-links span {
+  color: #111;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.nav-links span:hover {
+  color: #b76e79;
+}
+
+/* ================= CART ================= */
+
+.cart-icon {
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+  color: #111;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -10px;
+
+  background: black;
+  color: white;
+  font-size: 11px;
+
+  border-radius: 50%;
+  padding: 2px 6px;
+}
+
+/* ================= DARK MODE ================= */
+
+body.dark-mode .lux-navbar {
+  background: rgba(20, 20, 20, 0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+body.dark-mode .lux-logo {
+  color: #fff;
+}
+
+body.dark-mode .nav-links span {
+  color: #fff;
+}
+
+body.dark-mode .cart-icon {
+  color: #fff;
+}
+
+body.dark-mode .cart-badge {
+  background: white;
+  color: black;
+}

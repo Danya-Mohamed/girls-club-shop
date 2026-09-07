@@ -1,36 +1,76 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import { useState } from "react";
+
+import PageLayout from "../components/PageLayout";
+import FilterSidebar from "../components/FilterSidebar";
+
 import HoodiesCard from "../components/HoodiesCard";
 import { hoodies } from "../data/hoodies";
 
 const Hoodies = () => {
-  const navigate = useNavigate();
-  const [products, setProducts] = useState([]);
+  const [filters, setFilters] = useState({
+    category: "hoodies",
+    sizes: [],
+    price: 500,
+  });
 
-  useEffect(() => {
-    setProducts(hoodies);
-  }, []);
+  const products = hoodies;
 
   return (
-    <div className="home-container">
+    <PageLayout>
+      {(search) => {
 
-      <header className="top-bar">
-        <span onClick={() => navigate("/home")}>🏠</span>
-        <h1 className="logo">The Girls Club</h1>
-        <span>🛒</span>
-      </header>
+        const filteredProducts = products
+          // 🔍 SEARCH FILTER (NEW)
+          .filter((p) =>
+            p.name.toLowerCase().includes(search.toLowerCase())
+          )
 
-      <h2 className="page-title">Hoodies Collection</h2>
+          // 🎯 SIZE + PRICE FILTER
+          .filter((p) => {
+            const sizeMatch =
+              filters.sizes.length === 0 ||
+              filters.sizes.includes(p.size);
 
-      <div className="grid">
-        {products.map((item) => (
-          <HoodiesCard key={item.id} item={item} />
-        ))}
-      </div>
+            const priceMatch = p.price <= filters.price;
 
-      <Navbar />
-    </div>
+            return sizeMatch && priceMatch;
+          });
+
+        return (
+          <div className="shop-layout">
+
+            {/* FILTER SIDEBAR */}
+            <FilterSidebar
+              filters={filters}
+              setFilters={setFilters}
+            />
+
+            {/* CONTENT */}
+            <div className="shop-content">
+
+              <h2
+                style={{
+                  fontFamily: "Playfair Display",
+                  fontWeight: 300,
+                  letterSpacing: "3px",
+                  marginBottom: "30px",
+                }}
+              >
+                HOODIES COLLECTION
+              </h2>
+
+              <div className="fashion-grid">
+                {filteredProducts.map((item) => (
+                  <HoodiesCard key={item.id} item={item} />
+                ))}
+              </div>
+
+            </div>
+
+          </div>
+        );
+      }}
+    </PageLayout>
   );
 };
 

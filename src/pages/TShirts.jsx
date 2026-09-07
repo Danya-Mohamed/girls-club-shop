@@ -1,45 +1,83 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import { useState } from "react";
+
+import PageLayout from "../components/PageLayout";
+import FilterSidebar from "../components/FilterSidebar";
+
 import TshirtCard from "../components/TshirtCard";
-import "../pages/home.css";
 
-// images
-// First, make sure these files EXIST in your assets folder
-import russtee from "/src/assets/russtee.jpg";  // Try absolute path
-import matchatee from "/src/assets/matchtee.jpg";
-import hearttee from "/src/assets/heart_tee.jpg";
-
-
+import russtee from "../assets/russtee.jpg";
+import matchatee from "../assets/matchtee.jpg";
+import hearttee from "../assets/heart_tee.jpg";
 
 const Tshirts = () => {
-  const navigate = useNavigate();
+  const [filters, setFilters] = useState({
+    category: "tshirts",
+    sizes: [],
+    price: 500,
+  });
 
   const products = [
-    { id: 1, name: "Rus Tee", price: 25, image: russtee },
-    { id: 2, name: "Matcha Tee", price: 30, image: matchatee },
-    { id: 3, name: "Heart Tee", price: 28, image: hearttee },
+    { id: 1, name: "Rus Tee", price: 25, size: "M", image: russtee },
+    { id: 2, name: "Matcha Tee", price: 30, size: "L", image: matchatee },
+    { id: 3, name: "Heart Tee", price: 28, size: "S", image: hearttee },
   ];
 
   return (
-    <div className="home-container">
+    <PageLayout>
+      {(search) => {
 
-      <header className="top-bar">
-        <span onClick={() => navigate("/home")}>🏠</span>
-        <h1 className="logo">The Girls Club</h1>
-        <span>🛒</span>
-      </header>
+        const filteredProducts = products
+          // 🔍 SEARCH FILTER (NEW)
+          .filter((p) =>
+            p.name.toLowerCase().includes(search.toLowerCase())
+          )
 
-      <h2 className="page-title">T-Shirts Collection</h2>
+          // 🎯 SIZE + PRICE FILTER
+          .filter((p) => {
+            const sizeMatch =
+              filters.sizes.length === 0 ||
+              filters.sizes.includes(p.size);
 
-      <div className="grid">
-        {products.map((item) => (
-          <TshirtCard key={item.id} item={item} />
-        ))}
-      </div>
+            const priceMatch = p.price <= filters.price;
 
-      <Navbar />
-    </div>
+            return sizeMatch && priceMatch;
+          });
+
+        return (
+          <div className="shop-layout">
+
+            {/* FILTER SIDEBAR */}
+            <FilterSidebar
+              filters={filters}
+              setFilters={setFilters}
+            />
+
+            {/* CONTENT */}
+            <div className="shop-content">
+
+              <h2
+                style={{
+                  fontFamily: "Playfair Display",
+                  fontWeight: 300,
+                  letterSpacing: "3px",
+                  marginBottom: "30px",
+                }}
+              >
+                T-SHIRTS COLLECTION
+              </h2>
+
+              <div className="fashion-grid">
+                {filteredProducts.map((item) => (
+                  <TshirtCard key={item.id} item={item} />
+                ))}
+              </div>
+
+            </div>
+
+          </div>
+        );
+      }}
+    </PageLayout>
   );
 };
 
